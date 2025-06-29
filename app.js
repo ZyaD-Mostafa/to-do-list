@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
@@ -7,17 +8,21 @@ const app = express()
 app.use(cors())
 
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 // Middleware
 app.use(express.json())
 // DB  Connection 
-mongoose.connect("mongodb+srv://zyadmostafa9011:v02bsM9uMfJMUnah@cluster0.viwqegk.mongodb.net/ToDoList?retryWrites=true&w=majority&appName=Cluster0")
-.then(()=>{
-    console.log("Connected successfully")
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
-.catch((error)=>{
-    console.log("arror with connection with DB" , error);
+.then(() => {
+  console.log("Connected successfully")
 })
+.catch((error) => {
+  console.log("Error connecting to DB:", error);
+});
+
 app.use(taskRouter)
 app.listen(port ,()=>{
     console.log("serer running on port " + port);
