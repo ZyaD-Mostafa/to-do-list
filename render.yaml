@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: todo-list-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node app.js
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@cluster0.mongodb.net/ToDoList
